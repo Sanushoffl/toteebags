@@ -1,6 +1,5 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
-import productModel from "../models/productModel.js"; // Import productModel
 import Stripe from 'stripe'
 import razorpay from 'razorpay'
 
@@ -22,13 +21,6 @@ const placeOrder = async (req,res) => {
     try {
         
         const { userId, items, amount, address} = req.body;
-
-        // Deduct stock
-        for (const item of items) {
-            await productModel.findByIdAndUpdate(item._id, {
-                $inc: { stockQuantity: -item.quantity }
-            });
-        }
 
         const orderData = {
             userId,
@@ -119,14 +111,6 @@ const verifyStripe = async (req,res) => {
 
     try {
         if (success === "true") {
-            const order = await orderModel.findById(orderId);
-            if (order) {
-                for (const item of order.items) {
-                    await productModel.findByIdAndUpdate(item._id, {
-                        $inc: { stockQuantity: -item.quantity }
-                    });
-                }
-            }
             await orderModel.findByIdAndUpdate(orderId, {payment:true});
             await userModel.findByIdAndUpdate(userId, {cartData: {}})
             res.json({success: true});
@@ -188,14 +172,6 @@ const verifyRazorpay = async (req,res) => {
 
         const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
         if (orderInfo.status === 'paid') {
-            const order = await orderModel.findById(orderInfo.receipt);
-            if (order) {
-                for (const item of order.items) {
-                    await productModel.findByIdAndUpdate(item._id, {
-                        $inc: { stockQuantity: -item.quantity }
-                    });
-                }
-            }
             await orderModel.findByIdAndUpdate(orderInfo.receipt,{payment:true});
             await userModel.findByIdAndUpdate(userId,{cartData:{}})
             res.json({ success: true, message: "Payment Successful" })

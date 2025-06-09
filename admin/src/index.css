@@ -8,12 +8,12 @@
 }
 
 select,input,textarea{
-    border: 1px solid #c2c2c2; /* Consider changing to a new palette color, e.g., border-secondary */
-    outline-color: #C586A5; /* Consider changing to accent or secondary */
+    border: 1px solid #c2c2c2;
+    outline-color: #C586A5;
     border-radius: 4px;
 }
 
 .active{
-    background-color: #ffebf5; /* Consider changing to a lighter shade of secondary or accent */
-    border-color: #C586A5; /* Consider changing to accent or secondary */
+    background-color: #ffebf5;
+    border-color: #C586A5;
 }
