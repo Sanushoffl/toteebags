@@ -19,7 +19,13 @@ const ShopContextProvider = (props) => {
 
 
     const addToCart = async (itemId, size) => {
-
+        const product = products.find(p => p._id === itemId);
+        
+        if (!product.inStock) {
+            toast.error('This product is out of stock');
+            return;
+        }
+    
         if (!size) {
             toast.error('Select Product Size');
             return;
