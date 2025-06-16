@@ -26,10 +26,11 @@ const ShopContextProvider = (props) => {
             return;
         }
     
-        if (!size) {
-            toast.error('Select Product Size');
-            return;
-        }
+        // Remove the size check to make it optional
+        // if (!size) {
+        //     toast.error('Select Product Size');
+        //     return;
+        // }
 
         let cartData = structuredClone(cartItems);
 

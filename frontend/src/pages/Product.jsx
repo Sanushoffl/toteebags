@@ -81,7 +81,7 @@ const Product = () => {
           <p className='mt-5 text-3xl font-medium'>{currency}{productData.price}</p>
           <p className='mt-5 text-gray-500 md:w-4/5'>{productData.description}</p>
           <div className='flex flex-col gap-4 my-8'>
-              <p>Select Size</p>
+              <p></p>
               <div className='flex gap-2'>
                 {/* Check if productData.sizes exists and is an array before mapping */}
                 {productData.sizes && Array.isArray(productData.sizes) && productData.sizes.length > 0 ? (
@@ -89,12 +89,12 @@ const Product = () => {
                     <button onClick={()=>setSize(item)} className={`border py-2 px-4 bg-gray-100 ${item === size ? 'border-orange-500' : ''}`} key={index}>{item}</button>
                   ))
                 ) : (
-                  <p>No size options available</p> // Fallback if no sizes
+                  <p></p> // Fallback if no sizes
                 )}
               </div>
           </div>
           <button
-            onClick={() => addToCart(productData._id, size)}
+            onClick={() => addToCart(productData._id, size || undefined)}
             className={`px-8 py-3 text-sm ${!productData.inStock ? 'bg-gray-400 cursor-not-allowed' : 'bg-black active:bg-gray-700'} text-white`}
             disabled={!productData.inStock}
           >
